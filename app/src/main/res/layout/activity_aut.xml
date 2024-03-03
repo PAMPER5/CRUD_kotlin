@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Back Reg"
-        app:layout_constraintEnd_toEndOf="@+id/btAut"
-        app:layout_constraintStart_toStartOf="@+id/btAut"
-        app:layout_constraintTop_toBottomOf="@+id/btAut" />
+        app:layout_constraintEnd_toEndOf="@+id/btAction"
+        app:layout_constraintStart_toStartOf="@+id/btAction"
+        app:layout_constraintTop_toBottomOf="@+id/btAction" />
 
     <EditText
         android:id="@+id/etLogin"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btAut"
+        android:id="@+id/btAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
