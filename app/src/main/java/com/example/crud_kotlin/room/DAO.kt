@@ -13,6 +13,6 @@ interface DAO {
         fun checkUser(login: String, password: String): Entity.User?
 
         @Query("SELECT * from User where login = :login")
-        fun checkLogin(login: String, password: String): Entity.User?
+        fun checkLogin(login: String): Entity.User?
     }
 }

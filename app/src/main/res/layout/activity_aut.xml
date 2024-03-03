@@ -6,4 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".AutActivity">
 
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Back Reg"
+        app:layout_constraintEnd_toEndOf="@+id/btAut"
+        app:layout_constraintStart_toStartOf="@+id/btAut"
+        app:layout_constraintTop_toBottomOf="@+id/btAut" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Login"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btAut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Aut"
+        app:layout_constraintEnd_toEndOf="@+id/etPassword"
+        app:layout_constraintStart_toStartOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etLogin"
+        app:layout_constraintStart_toStartOf="@+id/etLogin"
+        app:layout_constraintTop_toBottomOf="@+id/etLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>
