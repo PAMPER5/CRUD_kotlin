@@ -23,7 +23,8 @@ class AutActivity : AppCompatActivity() {
         //инициализация бд
         userDatabase = Room.databaseBuilder(
             applicationContext,
-            DataBase.AppDatabase::class.java, "user_database"
+            DataBase.AppDatabase::class.java,
+            "user_database"
         ).build()
 
         //авторизация пользователя
@@ -37,7 +38,7 @@ class AutActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         if (result != null){
                             val intent = Intent(this@AutActivity, MainActivity::class.java)
-                            intent.putExtra("login", binding.etLogin.text.toString())
+                            intent.putExtra("id", result.idUser)
                             startActivity(intent)
                             finish()
                         }

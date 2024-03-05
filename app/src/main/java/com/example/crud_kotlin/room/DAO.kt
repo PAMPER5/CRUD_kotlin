@@ -1,4 +1,5 @@
 package com.example.crud_kotlin.room
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,6 +16,9 @@ interface DAO {
 
         @Query("SELECT * from User where login = :login")
         fun checkLogin(login: String): Entity.User?
+
+        @Query("SELECT * from User where idUser = :id")
+        fun getUser(id: Int): Entity.User
     }
 
     @Dao
@@ -26,12 +30,12 @@ interface DAO {
         fun deleteFav(fav: Entity.Fav)
 
         @Query("SELECT * FROM Record WHERE idRecord IN (SELECT idRecord FROM Fav WHERE idUser = :idUser)")
-        fun getFavRecords(idUser: Int): Records
+        fun getFavRecords(idUser: Int): LiveData<List<Entity.Record>>?
     }
 
     @Dao
     interface RecordDao{
         @Query("SELECT * FROM Record")
-        fun getAllRecords(): Records
+        fun getAllRecords(): LiveData<List<Entity.Record>>
     }
 }

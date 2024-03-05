@@ -12,9 +12,13 @@ class LentaActivity : AppCompatActivity() {
         binding = ActivityLentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //id пользователя, который авторизовался
+        val id = intent.getIntExtra("id",0)
+
         //Обратно в личный кабинет
         binding.btBackMain.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("id", id)
             startActivity(intent)
             finish()
         }
