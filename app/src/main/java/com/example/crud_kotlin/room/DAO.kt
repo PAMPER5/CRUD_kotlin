@@ -1,5 +1,4 @@
 package com.example.crud_kotlin.room
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -30,12 +29,15 @@ interface DAO {
         fun deleteFav(fav: Entity.Fav)
 
         @Query("SELECT * FROM Record WHERE idRecord IN (SELECT idRecord FROM Fav WHERE idUser = :idUser)")
-        fun getFavRecords(idUser: Int): LiveData<List<Entity.Record>>?
+        fun getFavRecords(idUser: Int): List<Entity.Record>?
+
+        @Query("SELECT * from Fav where idRecord = :idRecord and idUser =:idUser")
+        fun checkFav(idRecord: Int, idUser: Int): Entity.Fav?
     }
 
     @Dao
     interface RecordDao{
         @Query("SELECT * FROM Record")
-        fun getAllRecords(): LiveData<List<Entity.Record>>
+        fun getAllRecords(): List<Entity.Record>
     }
 }

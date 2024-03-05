@@ -19,7 +19,6 @@ class Entity {
         val idFav: Int = 0,
         val idUser: Int,
         val idRecord: Int,
-
     )
 
     @Entity
