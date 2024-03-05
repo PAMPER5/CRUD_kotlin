@@ -67,10 +67,10 @@ class LentaActivity : AppCompatActivity() {
             }
 
             //вывод информации первой записи
-            binding.tvHeader1.text = record[1].header
-            binding.tvName1.text = record[1].name
-            binding.tvCount1.text = "Колличество: ${record[1].count}"
-            binding.tvPrice1.text = "Цена: ${record[1].price} золотых"
+            binding.tvHeader1.text = record[0].header
+            binding.tvName1.text = record[0].name
+            binding.tvCount1.text = "Колличество: ${record[0].count}"
+            binding.tvPrice1.text = "Цена: ${record[0].price} золотых"
 
             //добавление/удкаление записи в/из избранных
             binding.btFav1.setOnClickListener {
@@ -87,10 +87,10 @@ class LentaActivity : AppCompatActivity() {
             }
 
             //вывод информации второй записи
-            binding.tvHeader2.text = record[2].header
-            binding.tvName2.text = record[2].name
-            binding.tvCount2.text = "Колличество: ${record[2].count}"
-            binding.tvPrice2.text = "Цена: ${record[2].price} золотых"
+            binding.tvHeader2.text = record[1].header
+            binding.tvName2.text = record[1].name
+            binding.tvCount2.text = "Колличество: ${record[1].count}"
+            binding.tvPrice2.text = "Цена: ${record[1].price} золотых"
 
             //добавление/удкаление записи в/из избранных
             binding.btFav2.setOnClickListener {
@@ -107,10 +107,10 @@ class LentaActivity : AppCompatActivity() {
             }
 
             //вывод информации третьей записи
-            binding.tvHeader3.text = record[3].header
-            binding.tvName3.text = record[3].name
-            binding.tvCount3.text = "Колличество: ${record[3].count}"
-            binding.tvPrice3.text = "Цена: ${record[3].price} золотых"
+            binding.tvHeader3.text = record[2].header
+            binding.tvName3.text = record[2].name
+            binding.tvCount3.text = "Колличество: ${record[2].count}"
+            binding.tvPrice3.text = "Цена: ${record[2].price} золотых"
 
             //добавление/удкаление записи в/из избранных
             binding.btFav3.setOnClickListener {
