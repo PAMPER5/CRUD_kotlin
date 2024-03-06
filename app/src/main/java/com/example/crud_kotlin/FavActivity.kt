@@ -9,6 +9,7 @@ import com.example.crud_kotlin.room.DataBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavActivity : AppCompatActivity() {
 
@@ -31,30 +32,33 @@ class FavActivity : AppCompatActivity() {
         val id = intent.getIntExtra("id",0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val record = userDatabase.favDao().getFavRecords(id)
-            if (record != null) {
-                if (record.isNotEmpty()) {
-                    //вывод информации первой записи
-                    binding.tvHeader1.text = record[0].header
-                    binding.tvName1.text = record[0].name
-                    binding.tvCount1.text = "Колличество: ${record[0].count}"
-                    binding.tvPrice1.text = "Цена: ${record[0].price} золотых"
-                }
+            val records = userDatabase.favDao().getFavRecords(id)
 
-                if (record.size > 1) {
-                    //вывод информации второй записи
-                    binding.tvHeader2.text = record[1].header
-                    binding.tvName2.text = record[1].name
-                    binding.tvCount2.text = "Колличество: ${record[1].count}"
-                    binding.tvPrice2.text = "Цена: ${record[1].price} золотых"
-                }
-
-                if (record.size > 2) {
-                    //вывод информации третьей записи
-                    binding.tvHeader3.text = record[2].header
-                    binding.tvName3.text = record[2].name
-                    binding.tvCount3.text = "Колличество: ${record[2].count}"
-                    binding.tvPrice3.text = "Цена: ${record[2].price} золотых"
+            withContext(Dispatchers.Main) {
+                if (!records.isNullOrEmpty()) {
+                    // Вывод информации о записях
+                    for ((index, record) in records.withIndex()) {
+                        when (index) {
+                            0 -> {
+                                binding.tvHeader1.text = record.header
+                                binding.tvName1.text = record.name
+                                binding.tvCount1.text = "Количество: ${record.count}"
+                                binding.tvPrice1.text = "Цена: ${record.price} золотых"
+                            }
+                            1 -> {
+                                binding.tvHeader2.text = record.header
+                                binding.tvName2.text = record.name
+                                binding.tvCount2.text = "Количество: ${record.count}"
+                                binding.tvPrice2.text = "Цена: ${record.price} золотых"
+                            }
+                            2 -> {
+                                binding.tvHeader3.text = record.header
+                                binding.tvName3.text = record.name
+                                binding.tvCount3.text = "Количество: ${record.count}"
+                                binding.tvPrice3.text = "Цена: ${record.price} золотых"
+                            }
+                        }
+                    }
                 }
             }
         }

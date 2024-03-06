@@ -22,117 +22,80 @@ class LentaActivity : AppCompatActivity() {
         binding = ActivityLentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //инициализация бд
+        // Инициализация базы данных
         userDatabase = Room.databaseBuilder(
             applicationContext,
             DataBase.AppDatabase::class.java,
             "user_database"
         ).build()
 
-        //id пользователя, который авторизовался
-        val id = intent.getIntExtra("id",0)
+        // Получение ID авторизованного пользователя
+        val id = intent.getIntExtra("id", 0)
 
-        //записываем всю информацию о авторизовавшемся пользователе
+        // Загрузка информации о пользователе
         CoroutineScope(Dispatchers.IO).launch {
-            val record = userDatabase.recordDao().getAllRecords()
+            val records = userDatabase.recordDao().getAllRecords()
 
-            //проверяем на наличие первой записи у пользователя в избранных
-            CoroutineScope(Dispatchers.IO).launch {
-                val result = userDatabase.favDao().checkFav(1, id)
-                if (result == null) {
-                    binding.btFav1.setBackgroundColor(Color.GRAY)
-                } else {
-                    binding.btFav1.setBackgroundColor(Color.RED)
-                }
-            }
+            // Проверка на наличие записей в избранном
+            val fav1Result = userDatabase.favDao().checkFav(1, id)
+            val fav2Result = userDatabase.favDao().checkFav(2, id)
+            val fav3Result = userDatabase.favDao().checkFav(3, id)
 
-            //проверяем на наличие второй записи у пользователя в избранных
-            CoroutineScope(Dispatchers.IO).launch {
-                val result = userDatabase.favDao().checkFav(2, id)
-                if (result == null) {
-                    binding.btFav2.setBackgroundColor(Color.GRAY)
-                } else {
-                    binding.btFav2.setBackgroundColor(Color.RED)
-                }
-            }
+            // Установка цвета кнопок избранного
+            setFavButtonColor(binding.btFav1, fav1Result)
+            setFavButtonColor(binding.btFav2, fav2Result)
+            setFavButtonColor(binding.btFav3, fav3Result)
 
-            //проверяем на наличие третье записи у пользователя в избранных
-            CoroutineScope(Dispatchers.IO).launch {
-                val result = userDatabase.favDao().checkFav(3, id)
-                if (result == null) {
-                    binding.btFav3.setBackgroundColor(Color.GRAY)
-                } else {
-                    binding.btFav3.setBackgroundColor(Color.RED)
-                }
-            }
+            // Вывод информации о записях
+            binding.tvHeader1.text = records[0].header
+            binding.tvName1.text = records[0].name
+            binding.tvCount1.text = "Колличество: ${records[0].count}"
+            binding.tvPrice1.text = "Цена: ${records[0].price} золотых"
 
-            //вывод информации первой записи
-            binding.tvHeader1.text = record[0].header
-            binding.tvName1.text = record[0].name
-            binding.tvCount1.text = "Колличество: ${record[0].count}"
-            binding.tvPrice1.text = "Цена: ${record[0].price} золотых"
+            binding.tvHeader2.text = records[1].header
+            binding.tvName2.text = records[1].name
+            binding.tvCount2.text = "Колличество: ${records[1].count}"
+            binding.tvPrice2.text = "Цена: ${records[1].price} золотых"
 
-            //добавление/удкаление записи в/из избранных
-            binding.btFav1.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val result = userDatabase.favDao().checkFav(1, id)
-                    if (result == null) {
-                        userDatabase.favDao().insertFav(Entity.Fav(idRecord = 1, idUser = id))
-                        binding.btFav1.setBackgroundColor(Color.RED)
-                    } else {
-                        userDatabase.favDao().deleteFav(result)
-                        binding.btFav1.setBackgroundColor(Color.GRAY)
-                    }
-                }
-            }
+            binding.tvHeader3.text = records[2].header
+            binding.tvName3.text = records[2].name
+            binding.tvCount3.text = "Колличество: ${records[2].count}"
+            binding.tvPrice3.text = "Цена: ${records[2].price} золотых"
 
-            //вывод информации второй записи
-            binding.tvHeader2.text = record[1].header
-            binding.tvName2.text = record[1].name
-            binding.tvCount2.text = "Колличество: ${record[1].count}"
-            binding.tvPrice2.text = "Цена: ${record[1].price} золотых"
-
-            //добавление/удкаление записи в/из избранных
-            binding.btFav2.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val result = userDatabase.favDao().checkFav(2, id)
-                    if (result == null) {
-                        userDatabase.favDao().insertFav(Entity.Fav(idRecord = 2, idUser = id))
-                        binding.btFav2.setBackgroundColor(Color.RED)
-                    } else {
-                        userDatabase.favDao().deleteFav(result)
-                        binding.btFav2.setBackgroundColor(Color.GRAY)
-                    }
-                }
-            }
-
-            //вывод информации третьей записи
-            binding.tvHeader3.text = record[2].header
-            binding.tvName3.text = record[2].name
-            binding.tvCount3.text = "Колличество: ${record[2].count}"
-            binding.tvPrice3.text = "Цена: ${record[2].price} золотых"
-
-            //добавление/удкаление записи в/из избранных
-            binding.btFav3.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val result = userDatabase.favDao().checkFav(3, id)
-                    if (result == null) {
-                        userDatabase.favDao().insertFav(Entity.Fav(idRecord = 3, idUser = id))
-                        binding.btFav3.setBackgroundColor(Color.RED)
-                    } else {
-                        userDatabase.favDao().deleteFav(result)
-                        binding.btFav3.setBackgroundColor(Color.GRAY)
-                    }
-                }
-            }
+            // Обработчики кнопок избранного
+            binding.btFav1.setOnClickListener { toggleFav(1, id, fav1Result) }
+            binding.btFav2.setOnClickListener { toggleFav(2, id, fav2Result) }
+            binding.btFav3.setOnClickListener { toggleFav(3, id, fav3Result) }
         }
 
-        //Обратно в личный кабинет
+        // Обработчик кнопки "Назад"
         binding.btBackMain.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
             finish()
+        }
+    }
+
+    //функция смены цвета кнопки
+    private fun setFavButtonColor(button: android.widget.Button, result: Entity.Fav?) {
+        if (result == null) {
+            button.setBackgroundColor(Color.GRAY)
+        } else {
+            button.setBackgroundColor(Color.RED)
+        }
+    }
+
+    //функция добавления/удаления записи в/из Fav
+    private fun toggleFav(idRecord: Int, idUser: Int, result: Entity.Fav?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (result == null) {
+                userDatabase.favDao().insertFav(Entity.Fav(idRecord = idRecord, idUser = idUser))
+                setFavButtonColor(binding.btFav1, userDatabase.favDao().checkFav(idRecord, idUser))
+            } else {
+                userDatabase.favDao().deleteFav(result)
+                setFavButtonColor(binding.btFav1, null)
+            }
         }
     }
 }
